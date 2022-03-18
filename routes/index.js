@@ -46,7 +46,6 @@ router.post('/proxy/post', async (req, res) => {
     [API_KEY_NAME]: API_KEY_VALUE,
     ...url.parse(req.url, true).query,
   })
-  console.log(body)
   const options = {
     method: 'POST',
     headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
@@ -56,17 +55,20 @@ router.post('/proxy/post', async (req, res) => {
       }
     )
   };
-
-  fetch(`${baseUrl}?${params}`, options)
+  fetch(`${baseUrl.replace(/\/+$/, "")}?${params}`, options)
     .then(response => {
-      console.log(response)
-      res.json({
+      console.log(response.statusText)
+      console.log(response.statusText)
+      res.status(response.status).json({
         data: body,
-        message: "success"
+        message: response.statusText
       })
     })
     .then(json => console.log(json))
-    .catch(err => console.error('error:' + err));
+    .catch(err => {
+      console.log(err.message)
+      console.error('error:' + err)
+    });
 
 
 })
