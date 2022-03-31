@@ -59,43 +59,43 @@ router.post('/proxy/post', async (req, res) => {
   };
 
   // Send a POST request
-  axios({
-    method: 'post',
-    url: `${baseUrl.replace(/\/+$/, "")}?${API_KEY_NAME}=${API_KEY_VALUE}`,
-    headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
-    data: JSON.stringify(
-      {
-        "profiles": body
-      }
-    )
-  }).then(response => {
-    console.log(response.data)
-    console.log(response.statusText)
-    res.status(response.status).json({
-      data: body,
-      message: response.statusText
-    })
-  }).catch(err => {
-    res.status(response.status).json({
-      context: err.message,
-      message: response.statusText
-    })
-  });
-  // console.log(`${baseUrl.replace(/\/+$/, "")}?${API_KEY_NAME}=${API_KEY_VALUE}`)
-  // console.log(options.body)
-  // fetch(`${baseUrl.replace(/\/+$/, "")}?${API_KEY_NAME}=${API_KEY_VALUE}`, options)
-  //   .then(response => {
-  //     console.log(response)
-  //     res.status(response.status).json({
-  //       data: body,
-  //       message: response.statusText
-  //     })
+  // axios({
+  //   method: 'post',
+  //   url: `${baseUrl.replace(/\/+$/, "")}?${API_KEY_NAME}=${API_KEY_VALUE}`,
+  //   headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+  //   data: JSON.stringify(
+  //     {
+  //       "profiles": body
+  //     }
+  //   )
+  // }).then(response => {
+  //   console.log(response.data)
+  //   console.log(response.statusText)
+  //   res.status(response.status).json({
+  //     data: body,
+  //     message: response.statusText
   //   })
-  //   .then(json => console.log('JSON RESPONSE', json))
-  //   .catch(err => {
-  //     console.log(err.message)
-  //     console.error('error:' + err)
-  //   });
+  // }).catch(err => {
+  //   res.status(response.status).json({
+  //     context: err.message,
+  //     message: response.statusText
+  //   })
+  // });
+  console.log(`${baseUrl.replace(/\/+$/, "")}?${API_KEY_NAME}=${API_KEY_VALUE}`)
+  console.log(options.body)
+  fetch(`${baseUrl.replace(/\/+$/, "")}?${API_KEY_NAME}=${API_KEY_VALUE}`, options)
+    .then(response => {
+      console.log(response)
+      res.status(response.status).json({
+        data: body,
+        message: response.statusText
+      })
+    })
+    .then(json => console.log('JSON RESPONSE', json))
+    .catch(err => {
+      console.log(err.message)
+      console.error('error:' + err)
+    });
 
 
 
