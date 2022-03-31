@@ -8,7 +8,7 @@ const addSubscriber = async (req, res) => {
   } = req.query
 
   try {
-    let subscriber = await Klaviyo.lists.addMembersToList({
+    let subscriber = await Klaviyo.lists.addSubscribersToList({
       listId,
       profiles: [
         body
