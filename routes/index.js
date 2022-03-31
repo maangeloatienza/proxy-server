@@ -55,9 +55,11 @@ router.post('/proxy/post', async (req, res) => {
       }
     )
   };
-  fetch(`${baseUrl.replace(/\/+$/, "")}?${params}`, options)
+  console.log(`${baseUrl.replace(/\/+$/, "")}?${API_KEY_NAME}=${API_KEY_VALUE}`)
+  console.log(options.body)
+  fetch(`${baseUrl.replace(/\/+$/, "")}?${API_KEY_NAME}=${API_KEY_VALUE}`, options)
     .then(response => {
-      console.log(response.statusText)
+      console.log(response)
       console.log(response.statusText)
       res.status(response.status).json({
         data: body,
