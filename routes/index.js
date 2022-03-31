@@ -6,10 +6,17 @@ const fetch = require('node-fetch')
 const axios = require('axios').default;
 require('dotenv').config()
 
+
+// controllers
+const profileController = require("../controller/profileController")
+
 const API_KEY_NAME = process.env.API_KEY_NAME
 const API_KEY_VALUE = process.env.API_KEY_VALUE
 
 axios.defaults.headers.post['Content-Type'] = 'application/json';
+
+
+router.post('/add-subscriber', profileController.addSubscriber);
 
 router.get('/proxy', async (req, res) => {
   let {
