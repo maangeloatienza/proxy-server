@@ -9,6 +9,7 @@ require('dotenv').config()
 const API_KEY_NAME = process.env.API_KEY_NAME
 const API_KEY_VALUE = process.env.API_KEY_VALUE
 
+axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 router.get('/proxy', async (req, res) => {
   let {
@@ -50,7 +51,7 @@ router.post('/proxy/post', async (req, res) => {
   })
   const options = {
     method: 'POST',
-    // headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+    headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
     body: JSON.stringify(
       {
         "profiles": body
