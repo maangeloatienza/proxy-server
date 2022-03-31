@@ -3,10 +3,12 @@ const express = require('express')
 const router = express.Router()
 const needle = require('needle')
 const fetch = require('node-fetch')
+const axios = require('axios').default;
 require('dotenv').config()
 
 const API_KEY_NAME = process.env.API_KEY_NAME
 const API_KEY_VALUE = process.env.API_KEY_VALUE
+
 
 router.get('/proxy', async (req, res) => {
   let {
@@ -48,29 +50,54 @@ router.post('/proxy/post', async (req, res) => {
   })
   const options = {
     method: 'POST',
-    headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+    // headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
     body: JSON.stringify(
       {
-        profiles: body
+        "profiles": body
       }
     )
   };
-  console.log(`${baseUrl.replace(/\/+$/, "")}?${API_KEY_NAME}=${API_KEY_VALUE}`)
-  console.log(options.body)
-  fetch(`${baseUrl.replace(/\/+$/, "")}?${API_KEY_NAME}=${API_KEY_VALUE}`, options)
-    .then(response => {
-      console.log(response)
-      console.log(response.statusText)
-      res.status(response.status).json({
-        data: body,
-        message: response.statusText
-      })
+
+  // Send a POST request
+  axios({
+    method: 'post',
+    url: `${baseUrl.replace(/\/+$/, "")}?${API_KEY_NAME}=${API_KEY_VALUE}`,
+    headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+    data: JSON.stringify(
+      {
+        "profiles": body
+      }
+    )
+  }).then(response => {
+    console.log(response.data)
+    console.log(response.statusText)
+    res.status(response.status).json({
+      data: body,
+      message: response.statusText
     })
-    .then(json => console.log(json))
-    .catch(err => {
-      console.log(err.message)
-      console.error('error:' + err)
-    });
+  }).catch(err => {
+    res.status(response.status).json({
+      context: err.message,
+      message: response.statusText
+    })
+  });
+  // console.log(`${baseUrl.replace(/\/+$/, "")}?${API_KEY_NAME}=${API_KEY_VALUE}`)
+  // console.log(options.body)
+  // fetch(`${baseUrl.replace(/\/+$/, "")}?${API_KEY_NAME}=${API_KEY_VALUE}`, options)
+  //   .then(response => {
+  //     console.log(response)
+  //     res.status(response.status).json({
+  //       data: body,
+  //       message: response.statusText
+  //     })
+  //   })
+  //   .then(json => console.log('JSON RESPONSE', json))
+  //   .catch(err => {
+  //     console.log(err.message)
+  //     console.error('error:' + err)
+  //   });
+
+
 
 
 })
