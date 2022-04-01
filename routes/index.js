@@ -17,6 +17,7 @@ axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 
 router.post('/add-subscriber', profileController.addSubscriber);
+router.post('/add-member', profileController.addMember);
 
 router.get('/proxy', async (req, res) => {
   let {
